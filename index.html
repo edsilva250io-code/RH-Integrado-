@@ -1,0 +1,651 @@
+```html
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RH Integrado | Plataforma de RH para o ecossistema Microsoft</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-blue: #0078d4;
+            --microsoft-blue: #00a4ef;
+            --dark-blue: #005a9e;
+            --light-gray: #f3f2f1;
+            --medium-gray: #e1dfdd;
+            --dark-gray: #323130;
+            --text-color: #323130;
+            --white: #ffffff;
+            --success-green: #107c10;
+            --warning-orange: #ff8c00;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            color: var(--text-color);
+            line-height: 1.6;
+            background-color: var(--white);
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header & Navigation */
+        header {
+            background-color: var(--white);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 600;
+            font-size: 24px;
+            color: var(--primary-blue);
+        }
+        
+        .logo i {
+            color: var(--microsoft-blue);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+        
+        nav a {
+            text-decoration: none;
+            color: var(--dark-gray);
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        nav a:hover {
+            color: var(--primary-blue);
+        }
+        
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 24px;
+            color: var(--primary-blue);
+            cursor: pointer;
+        }
+        
+        /* Hero Section */
+        .hero {
+            padding: 80px 0;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero-content {
+            max-width: 800px;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .hero h1 {
+            font-size: 48px;
+            line-height: 1.2;
+            color: var(--dark-blue);
+            margin-bottom: 20px;
+        }
+        
+        .hero-subtitle {
+            font-size: 20px;
+            color: var(--dark-gray);
+            margin-bottom: 30px;
+            max-width: 700px;
+        }
+        
+        .cta-buttons {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            padding: 14px 28px;
+            border-radius: 4px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            text-decoration: none;
+            font-size: 16px;
+            border: none;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary-blue);
+            color: var(--white);
+        }
+        
+        .btn-primary:hover {
+            background-color: var(--dark-blue);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 120, 212, 0.3);
+        }
+        
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--primary-blue);
+            border: 2px solid var(--primary-blue);
+        }
+        
+        .btn-secondary:hover {
+            background-color: rgba(0, 120, 212, 0.05);
+            transform: translateY(-2px);
+        }
+        
+        .microsoft-badge {
+            display: inline-flex;
+            align-items: center;
+            background-color: var(--light-gray);
+            padding: 10px 20px;
+            border-radius: 30px;
+            gap: 10px;
+            font-weight: 500;
+        }
+        
+        .microsoft-badge i {
+            color: var(--primary-blue);
+        }
+        
+        .hero-image {
+            position: absolute;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            max-width: 500px;
+            opacity: 0.8;
+        }
+        
+        /* Target Audience Section */
+        .audience-section {
+            padding: 80px 0;
+            background-color: var(--white);
+        }
+        
+        .section-title {
+            text-align: center;
+            font-size: 36px;
+            color: var(--dark-blue);
+            margin-bottom: 20px;
+        }
+        
+        .section-subtitle {
+            text-align: center;
+            font-size: 18px;
+            color: var(--dark-gray);
+            max-width: 800px;
+            margin: 0 auto 50px;
+        }
+        
+        .audience-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+        
+        .audience-card {
+            background-color: var(--white);
+            border-radius: 8px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: transform 0.3s, box-shadow 0.3s;
+            border-top: 4px solid var(--primary-blue);
+        }
+        
+        .audience-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        }
+        
+        .audience-card i {
+            font-size: 36px;
+            color: var(--primary-blue);
+            margin-bottom: 20px;
+        }
+        
+        .audience-card h3 {
+            font-size: 20px;
+            margin-bottom: 15px;
+            color: var(--dark-blue);
+        }
+        
+        /* Benefits Section */
+        .benefits-section {
+            padding: 80px 0;
+            background-color: var(--light-gray);
+        }
+        
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+        
+        .benefit-item {
+            background-color: var(--white);
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        
+        .benefit-item i {
+            font-size: 28px;
+            color: var(--success-green);
+            margin-bottom: 15px;
+        }
+        
+        .benefit-item h3 {
+            font-size: 18px;
+            margin-bottom: 10px;
+            color: var(--dark-blue);
+        }
+        
+        /* Features Section */
+        .features-section {
+            padding: 80px 0;
+            background-color: var(--white);
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-top: 50px;
+        }
+        
+        .feature-item {
+            padding: 20px;
+            border-left: 4px solid var(--microsoft-blue);
+            background-color: var(--light-gray);
+        }
+        
+        .feature-item h4 {
+            margin-bottom: 10px;
+            color: var(--dark-blue);
+        }
+        
+        /* Highlights Section */
+        .highlights-section {
+            padding: 80px 0;
+            background-color: var(--light-gray);
+        }
+        
+        .highlights-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+        }
+        
+        .highlight-card {
+            background-color: var(--white);
+            padding: 30px;
+            border-radius: 8px;
+            width: 300px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        
+        .highlight-card i {
+            font-size: 42px;
+            color: var(--primary-blue);
+            margin-bottom: 20px;
+        }
+        
+        .highlight-card h3 {
+            margin-bottom: 15px;
+            color: var(--dark-blue);
+        }
+        
+        /* Microsoft Integration Section */
+        .integration-section {
+            padding: 80px 0;
+            background-color: var(--white);
+            text-align: center;
+        }
+        
+        .integration-logos {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 40px;
+            margin-top: 40px;
+        }
+        
+        .integration-logo {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .integration-logo i {
+            font-size: 48px;
+            color: var(--primary-blue);
+        }
+        
+        /* CTA Section */
+        .cta-section {
+            padding: 80px 0;
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--dark-blue) 100%);
+            color: var(--white);
+            text-align: center;
+        }
+        
+        .cta-section h2 {
+            font-size: 36px;
+            margin-bottom: 20px;
+        }
+        
+        .cta-section p {
+            font-size: 18px;
+            max-width: 700px;
+            margin: 0 auto 40px;
+            opacity: 0.9;
+        }
+        
+        .cta-section .btn {
+            background-color: var(--white);
+            color: var(--primary-blue);
+        }
+        
+        .cta-section .btn:hover {
+            background-color: var(--light-gray);
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--dark-gray);
+            color: var(--white);
+            padding: 60px 0 30px;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        
+        .footer-column h3 {
+            font-size: 18px;
+            margin-bottom: 20px;
+            color: var(--white);
+        }
+        
+        .footer-column ul {
+            list-style: none;
+        }
+        
+        .footer-column ul li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-column a {
+            color: #ddd;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-column a:hover {
+            color: var(--microsoft-blue);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            color: #aaa;
+            font-size: 14px;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .hero h1 {
+                font-size: 40px;
+            }
+            
+            .hero-image {
+                display: none;
+            }
+            
+            .hero-content {
+                max-width: 100%;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            nav ul {
+                display: none;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .hero h1 {
+                font-size: 32px;
+            }
+            
+            .hero-subtitle {
+                font-size: 18px;
+            }
+            
+            .section-title {
+                font-size: 28px;
+            }
+            
+            .cta-buttons {
+                flex-direction: column;
+            }
+            
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 28px;
+            }
+            
+            .section-title {
+                font-size: 24px;
+            }
+            
+            .audience-card, .benefit-item, .highlight-card {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header & Navigation -->
+    <header>
+        <div class="container header-container">
+            <div class="logo">
+                <i class="fas fa-users-cog"></i>
+                <span>RHIntegrado</span>
+            </div>
+            
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <i class="fas fa-bars"></i>
+            </button>
+            
+            <nav>
+                <ul id="mainMenu">
+                    <li><a href="#beneficios">Benefícios</a></li>
+                    <li><a href="#recursos">Recursos</a></li>
+                    <li><a href="#publico">Para quem é</a></li>
+                    <li><a href="#integracao">Integração</a></li>
+                    <li><a href="#contato">Demonstração</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>RH mais inteligente dentro do seu ecossistema Microsoft</h1>
+                <p class="hero-subtitle">Gestão integrada de funcionários, acompanhamento de desempenho e integração — tudo sincronizado com o Microsoft 365 e o Teams.</p>
+                
+                <div class="cta-buttons">
+                    <a href="#contato" class="btn btn-primary">
+                        <i class="fas fa-play-circle"></i>
+                        Solicitar uma demonstração
+                    </a>
+                    <a href="#integracao" class="btn btn-secondary">
+                        <i class="fab fa-microsoft"></i>
+                        Ver a integração com a Microsoft
+                    </a>
+                </div>
+                
+                <div class="microsoft-badge">
+                    <i class="fab fa-microsoft"></i>
+                    <span>Totalmente compatível com a Microsoft</span>
+                </div>
+            </div>
+            
+            <div class="hero-image">
+                <!-- Este seria uma imagem ilustrativa -->
+                <div style="width: 100%; height: 300px; background-color: rgba(0, 120, 212, 0.1); border-radius: 10px; display: flex; align-items: center; justify-content: center;">
+                    <i class="fas fa-users" style="font-size: 150px; color: rgba(0, 120, 212, 0.3);"></i>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Target Audience Section -->
+    <section class="audience-section" id="publico">
+        <div class="container">
+            <h2 class="section-title">Feito para empresas que já utilizam o Microsoft 365</h2>
+            <p class="section-subtitle">Nossa plataforma foi desenvolvida para atender às necessidades específicas de organizações que já investiram no ecossistema Microsoft</p>
+            
+            <div class="audience-cards">
+                <div class="audience-card">
+                    <i class="fas fa-building"></i>
+                    <h3>Empresas de médio porte</h3>
+                    <p>Que utilizam o Microsoft 365 e buscam otimizar seus processos de RH com uma solução integrada.</p>
+                </div>
+                
+                <div class="audience-card">
+                    <i class="fas fa-user-tie"></i>
+                    <h3>Líderes de TI e RH</h3>
+                    <p>Que gerenciam equipes distribuídas e precisam de uma solução segura e centralizada.</p>
+                </div>
+                
+                <div class="audience-card">
+                    <i class="fas fa-chart-line"></i>
+                    <h3>Equipes de operações corporativas</h3>
+                    <p>Em setores regulamentados que exigem controle de acesso e conformidade rigorosa.</p>
+                </div>
+                
+                <div class="audience-card">
+                    <i class="fas fa-hospital"></i>
+                    <h3>Organizações governamentais e de saúde</h3>
+                    <p>Que exigem controle preciso do Azure AD e conformidade com regulamentações setoriais.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Benefits Section -->
+    <section class="benefits-section" id="beneficios">
+        <div class="container">
+            <h2 class="section-title">Principais benefícios da integração completa</h2>
+            <p class="section-subtitle">Maximize seu investimento no ecossistema Microsoft com uma solução de RH nativamente integrada</p>
+            
+            <div class="benefits-grid">
+                <div class="benefit-item">
+                    <i class="fab fa-microsoft-teams"></i>
+                    <h3>Funciona dentro do Microsoft Teams</h3>
+                    <p>Gerencie todos os processos de RH diretamente no Teams, sem necessidade de alternar entre aplicativos.</p>
+                </div>
+                
+                <div class="benefit-item">
+                    <i class="fas fa-user-shield"></i>
+                    <h3>Sincroniza com o Azure AD</h3>
+                    <p>Permissões de usuário automaticamente sincronizadas com o Azure Active Directory.</p>
+                </div>
+                
+                <div class="benefit-item">
+                    <i class="fas fa-robot"></i>
+                    <h3>Automatiza processos de RH</h3>
+                    <p>Automatização completa da integração, registro de presença e avaliações de desempenho.</p>
+                </div>
+                
+                <div class="benefit-item">
+                    <i class="fas fa-project-diagram"></i>
+                    <h3>Fluxos de trabalho personalizados</h3>
+                    <p>Crie fluxos de trabalho e políticas de RH por função, departamento ou localização.</p>
+                </div>
+                
+                <div class="benefit-item">
+                    <i class="fas fa-bell"></i>
+                    <h3>Atualizações em tempo real</h3>
+                    <p>Alertas e compartilhamento de documentos via Outlook/Teams com notificações em tempo real.</p>
+                </div>
+                
+                <div class="benefit-item">
+                    <i class="fas fa-key"></i>
+                    <h3>Single Sign-On (SSO)</h3>
+                    <p>Não são necessários novos logins — funciona com suas credenciais existentes do Microsoft 365.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features-section" id="recursos">
+        <div class="container">
+            <h2 class="section-title">Tudo o que você pode gerenciar em uma única plataforma</h2>
+            <p class="section-subtitle">Solução completa para gestão de recursos humanos integrada ao seu ecossistema Microsoft</p>
+            
+            <div class="features-grid">
+                <div class="feature-item">
+                    <h4>Integração/Desligamento de Funcionários</h4>
+                    <p>Automatize o onboarding e offboarding com fluxos de trabalho personalizados e checklist de tarefas.</p>
+                </div>
+                
+                <div class="feature-item">
+                    <h4>Organograma e Diretório</h4>
+                    <
